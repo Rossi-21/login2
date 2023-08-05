@@ -17,6 +17,8 @@ class UserManager(models.Manager):
         if not EMAIL_REGEX.match(postData['email']):
             errors['email'] = "Invalid email address!"
 
+        return errors
+
 
 class User(models.Model):
     first_name = models.CharField(max_length=256)

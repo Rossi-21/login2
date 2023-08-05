@@ -9,6 +9,15 @@
 </head>
 <body>
     <h1>login</h1>
+    <div>
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li {% if massage.tags %}class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul> 
+        {% endif%}
+    </div>
     <form action="/register" method="post">
         {% csrf_token %}
         <label for="first_name">First Name:</label>
