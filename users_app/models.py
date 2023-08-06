@@ -16,6 +16,10 @@ class UserManager(models.Manager):
             r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
         if not EMAIL_REGEX.match(postData['email']):
             errors['email'] = "Invalid email address!"
+        if len(postData['password']) < 4:
+            errors['password'] = 'Password must be at least 4 characters'
+        if postData['password'] != postData['confirmPw']:
+            errors['confirmPw'] = 'Passwords must match'
 
         return errors
 

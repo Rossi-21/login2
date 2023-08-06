@@ -27,7 +27,7 @@ def register(request):
         user = User.objects.create(
             first_name=first_name, last_name=last_name, email=email, password=password)
 
-        return redirect('dashboard/')
+        return redirect('dashboard/', user)
 
 
 def dashboard(request):
