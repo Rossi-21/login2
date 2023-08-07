@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from users_app.models import User
+import bcrypt
 
 
 def index(request):
@@ -23,11 +24,12 @@ def register(request):
         last_name = request.POST['last_name']
         email = request.POST['email']
         password = request.POST['password']
+        pw_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
 
         user = User.objects.create(
-            first_name=first_name, last_name=last_name, email=email, password=password)
+            first_name=first_name, last_name=last_name, email=email, password=pw_hash)
 
-        return redirect('dashboard/', user)
+        return redirect('/dashboard', user)
 
 
 def dashboard(request):
