@@ -1,13 +1,28 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm
 from users_app.models import User
-from .forms import LoginForm
+from .forms import LoginForm, CreateUserForm
 import bcrypt
 
 
 def index(request):
-    form = LoginForm()
-    return render(request, "index.html", {'form': form})
+
+    form1 = CreateUserForm()
+    form2 = LoginForm()
+
+    if request.method == 'POST':
+        form1 = CreateUserForm(request.POST)
+        if form1.is_valid():
+            form1.save()
+            return redirect()
+
+    context = {
+        'form1': form1,
+        'form2': form2,
+    }
+
+    return render(request, "index.html", context)
 
 
 def register(request):
@@ -18,7 +33,7 @@ def register(request):
         for key, value in errors.items():
             messages.error(request, value)
 
-        return redirect('/')
+        return redirect('/dashboard')
 
     else:
 
