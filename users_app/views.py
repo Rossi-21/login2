@@ -1,13 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from users_app.models import User
+from .forms import LoginForm
 import bcrypt
 
 
 def index(request):
-
-    return render(request, "index.html")
+    form = LoginForm()
+    return render(request, "index.html", {'form': form})
 
 
 def register(request):
@@ -36,18 +36,24 @@ def register(request):
 
 def login(request):
 
-    user = User.objects.filter(email=request.POST['email'])
+    if request.method == "POST":
+        form = LoginForm(request.post)
+        if form.is_valid():
+            user = User.objects.filter(email=request.POST['email'])
 
-    if user:
+            if user:
 
-        logged_user = user[0]
+                logged_user = user[0]
 
-        if bcrypt.checkpw(request.POST['password'].encode(), logged_user.password.encode()):
-            request.session['userid'] = logged_user.id
+                if bcrypt.checkpw(request.POST['password'].encode(), logged_user.password.encode()):
+                    request.session['userid'] = logged_user.id
 
-            return redirect('/dashboard')
+                    return redirect('/dashboard')
 
-    return redirect('/')
+                else:
+                    form = LoginForm()
+
+                    return redirect('/')
 
 
 def dashboard(request):
