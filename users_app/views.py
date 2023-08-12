@@ -25,28 +25,28 @@ def index(request):
     return render(request, "index.html", context)
 
 
-def register(request):
-    errors = User.objects.validator(request.POST)
+# def register(request):
+    # errors = User.objects.validator(request.POST)
 
-    if len(errors) > 0:
+    # if len(errors) > 0:
 
-        for key, value in errors.items():
-            messages.error(request, value)
+    # for key, value in errors.items():
+    # messages.error(request, value)
 
-        return redirect('/dashboard')
+    # return redirect('/dashboard')
 
-    else:
+   # else:
 
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        email = request.POST['email']
-        password = request.POST['password']
-        pw_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+    # first_name = request.POST['first_name']
+    # last_name = request.POST['last_name']
+    # email = request.POST['email']
+    # password = request.POST['password']
+    # pw_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
 
-        user = User.objects.create(
-            first_name=first_name, last_name=last_name, email=email, password=pw_hash)
+    # user = User.objects.create(
+    # first_name=first_name, last_name=last_name, email=email, password=pw_hash)
 
-        return redirect('/dashboard', user)
+    # return redirect('/dashboard', user)
 
 
 def login(request):
