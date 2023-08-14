@@ -3,13 +3,25 @@
     padding: 0;
 }
 
+h1{
+    color: rebeccapurple;
+}
 form{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items:center;
     padding: 2%;
-    width: 30%;
-    color: red;
-    border: solid black
+    width: 50%;
+    border: solid black;
+}
+
+.error{
+    color:red;
+}
+
+.message{
+    color: white;
+    background-color: blue;
+    border: solid black;
 }

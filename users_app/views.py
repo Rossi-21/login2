@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
+
 from users_app.models import User
+from .models import *
 from .forms import LoginForm, CreateUserForm
 import bcrypt
 
@@ -15,7 +17,9 @@ def index(request):
         form1 = CreateUserForm(request.POST)
         if form1.is_valid():
             form1.save()
-            return redirect()
+            user = form1.cleaned_data.get('username')
+            messages.success(request, 'Account was created for ' + user)
+            return redirect('/dashboard')
 
     context = {
         'form1': form1,
@@ -49,26 +53,26 @@ def index(request):
     # return redirect('/dashboard', user)
 
 
-def login(request):
+# def login(request):
 
-    if request.method == "POST":
-        form = LoginForm(request.post)
-        if form.is_valid():
-            user = User.objects.filter(email=request.POST['email'])
+#     if request.method == "POST":
+#         form = LoginForm(request.post)
+#         if form.is_valid():
+#             user = User.objects.filter(email=request.POST['email'])
 
-            if user:
+#             if user:
 
-                logged_user = user[0]
+#                 logged_user = user[0]
 
-                if bcrypt.checkpw(request.POST['password'].encode(), logged_user.password.encode()):
-                    request.session['userid'] = logged_user.id
+#                 if bcrypt.checkpw(request.POST['password'].encode(), logged_user.password.encode()):
+#                     request.session['userid'] = logged_user.id
 
-                    return redirect('/dashboard')
+#                     return redirect('/dashboard')
 
-                else:
-                    form = LoginForm()
+#                 else:
+#                     form = LoginForm()
 
-                    return redirect('/')
+#                     return redirect('/')
 
 
 def dashboard(request):
