@@ -21,7 +21,7 @@
                 {{form1.password1}}
                 {{form1.password2.label}}
                 {{form1.password2}}
-                <button type="submit">Submit</button>
+                <button type="submit">Register</button>
                 <div class="error">
                     {{form1.errors}}
                 </div>
@@ -29,12 +29,14 @@
             
            
         </div>
+        <div>
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{ form2.as_p }}
+                <button type="submit">Login</button>
+            </form>
+        </div>
         
-        <!--<form action="/login" method="POST">
-            {% csrf_token %}
-            {{ form2.as_p }}
-            <button type="submit">Login</button>-->
-        </form>
     </container>
     
 </body>
